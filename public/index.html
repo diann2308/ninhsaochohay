@@ -17,13 +17,14 @@
       background-attachment: fixed;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 40px 20px;
       color: #333;
-      overflow: hidden;
+      overflow-y: auto;
       position: relative;
+      box-sizing: border-box;
     }
 
     /* ======== ẢNH TRƯỜNG MỜ PHÍA SAU ======== */
@@ -34,10 +35,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url("hanthuyn.jpg"); /* 👉 Thay bằng ảnh trường mày */
+      background-image: url("hanthuyn.jpg");
       background-size: cover;
       background-position: center;
-      opacity: 0.15; /* độ mờ ảnh nền */
+      opacity: 0.15;
       z-index: 0;
     }
 
@@ -77,6 +78,8 @@
       position: relative;
       z-index: 2;
       animation: fadeIn 1s ease-out;
+      margin-top: 100px;
+      margin-bottom: 80px;
     }
 
     @keyframes fadeIn {
@@ -142,13 +145,24 @@
       padding: 15px;
       margin-top: 15px;
       border-radius: 0 8px 8px 0;
-      animation: appear 0.5s ease forwards;
       opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 0.6s ease forwards;
+      position: relative;
+      box-shadow: 0 0 0 rgba(232, 90, 112, 0.3);
+      transition: box-shadow 0.5s ease-in-out;
     }
 
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Viền sáng lung linh */
+    .result-item.glow {
+      box-shadow: 0 0 15px 3px rgba(255, 100, 130, 0.5);
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ======== LOADING ======== */
@@ -172,7 +186,7 @@
 <body>
   <!-- ======== LOGO GÓC TRÁI ======== -->
   <div class="logo">
-    <img src="logotruongdepnhatbacninh.jpg" alt="Logo Trường" /> <!-- 👉 Thay ảnh logo trường mày -->
+    <img src="logotruongdepnhatbacninh.jpg" alt="Logo Trường" />
   </div>
 
   <!-- ======== KHUNG THIỆP ======== -->
@@ -216,14 +230,26 @@
         if (data.error) {
           resultsDiv.innerHTML = `<div class="result-item" style="border-left-color:#e53935"><b>Lỗi:</b> ${data.error}</div>`;
         } else {
-          const lines = data.result.split("\n").filter(t => t.trim());
-          lines.forEach((line, i) => {
+          const raw = data.result;
+          const parts = raw.split(/\d+\.\s/).filter(p => p.trim());
+
+          parts.forEach((part, i) => {
+            const text = part.replace(/\n+/g, " ").trim();
             const div = document.createElement("div");
             div.className = "result-item";
-            div.style.animationDelay = `${i * 0.15}s`;
-            div.textContent = line;
+            div.style.animationDelay = `${i * 0.2}s`;
+            div.textContent = `${i + 1}. ${text}`;
             resultsDiv.appendChild(div);
+
+            // Thêm hiệu ứng glow nhẹ sau khi xuất hiện
+            setTimeout(() => div.classList.add("glow"), i * 200 + 800);
+            setTimeout(() => div.classList.remove("glow"), i * 200 + 2000);
           });
+
+          // Cuộn xuống cuối
+          setTimeout(() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+          }, 600);
         }
       } catch (err) {
         spinner.style.display = "none";
