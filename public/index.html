@@ -6,122 +6,188 @@
   <title>AI Nâng Cấp Lời Chúc 20/11</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" />
   <style>
-    body { 
-      font-family: 'Be Vietnam Pro', sans-serif; 
-      background-color: #f5f7fa; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 100vh; 
-      margin: 0; 
-      padding: 20px; 
-      color: #333; 
-      overflow-x: hidden;
-    }
-
-    .container { 
-      background: #fff; 
-      padding: 40px; 
-      border-radius: 12px; 
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
-      max-width: 600px; 
-      width: 100%; 
-      text-align: center; 
+    /* ======== TOÀN TRANG ======== */
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #fff8f0;
+      background-image:
+        radial-gradient(circle at 20% 20%, #ffe0e0 2%, transparent 20%),
+        radial-gradient(circle at 80% 80%, #d6f0ff 2%, transparent 20%);
+      background-size: 250px 250px;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      overflow: hidden;
       position: relative;
-      z-index: 1;
     }
 
-    h1 { color: #2c7be5; }
-
-    textarea { 
-      width: 100%; 
-      min-height: 100px; 
-      padding: 15px; 
-      border-radius: 8px; 
-      border: 1px solid #ccc; 
-      font-size: 16px; 
-      resize: vertical; 
+    /* ======== ẢNH TRƯỜNG MỜ PHÍA SAU ======== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("hanthuyn.jpg"); /* 👉 Thay bằng ảnh trường mày */
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15; /* độ mờ ảnh nền */
+      z-index: 0;
     }
 
-    button { 
-      background: #2c7be5; 
-      color: #fff; 
-      border: none; 
-      padding: 15px 30px; 
-      border-radius: 8px; 
-      cursor: pointer; 
-      font-size: 16px; 
-      margin-top: 20px; 
-      transition: background 0.3s;
-    }
-
-    button:hover { background: #1a5db3; }
-
-    .result-item { 
-      background: #f9f9f9; 
-      border-left: 4px solid #2c7be5; 
-      padding: 15px; 
-      margin-top: 15px; 
-      border-radius: 0 8px 8px 0; 
-    }
-
-    .spinner { 
-      border: 4px solid rgba(0,0,0,0.1); 
-      width: 36px; 
-      height: 36px; 
-      border-radius: 50%; 
-      border-left-color: #2c7be5; 
-      animation: spin 1s linear infinite; 
-      margin: 20px auto; 
-      display: none; 
-    }
-
-    @keyframes spin { 
-      0% { transform: rotate(0); } 
-      100% { transform: rotate(360deg); } 
-    }
-
-    /* 🌸 Ảnh góc trái có chuyển động lượn lờ */
-    .corner-image {
+    /* ======== LOGO GÓC TRÁI ======== */
+    .logo {
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 5%;
-      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      z-index: 10;
       animation: floaty 6s ease-in-out infinite;
     }
-
-    .corner-image img {
+    .logo img {
       width: 100%;
-      height: auto;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
-    @keyframes floaty {
-      0%   { transform: translateY(0px) rotate(0deg); }
-      25%  { transform: translateY(-8px) rotate(3deg); }
-      50%  { transform: translateY(0px) rotate(-3deg); }
-      75%  { transform: translateY(6px) rotate(2deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
+    /* ======== KHUNG THIỆP ======== */
+    .container {
+      background: rgba(255, 253, 248, 0.96);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      border: 3px double #ffb6b6;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #e85a70;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 25px;
+    }
+
+    /* ======== Ô NHẬP ======== */
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      resize: vertical;
+      font-family: inherit;
+      transition: 0.3s;
+    }
+
+    textarea:focus {
+      border-color: #e85a70;
+      box-shadow: 0 0 0 3px rgba(232, 90, 112, 0.15);
+      outline: none;
+    }
+
+    /* ======== NÚT ======== */
+    button {
+      background: linear-gradient(90deg, #e85a70, #f57c00);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #d24e64, #e76b00);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(232, 90, 112, 0.3);
+    }
+
+    /* ======== KẾT QUẢ ======== */
+    .result-item {
+      background: #fff4f4;
+      border-left: 4px solid #e85a70;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 0 8px 8px 0;
+      animation: appear 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======== LOADING ======== */
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: #e85a70;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <!-- 🌼 Ảnh lượn lờ góc trên bên trái -->
-  <div class="corner-image">
-    <img src="logotruongdepnhatbacninh.jpg" alt="Logo 20/11">
+  <!-- ======== LOGO GÓC TRÁI ======== -->
+  <div class="logo">
+    <img src="logotruongdepnhatbacninh.jpg" alt="Logo Trường" /> <!-- 👉 Thay ảnh logo trường mày -->
   </div>
 
+  <!-- ======== KHUNG THIỆP ======== -->
   <div class="container">
     <h1>✨ AI Nâng Cấp Lời Chúc 20/11 ✨</h1>
     <p>Nhập lời chúc của bạn, AI sẽ giúp bạn viết lại hay hơn!</p>
+
     <textarea id="userInput" placeholder="Ví dụ: Cảm ơn cô đã dạy dỗ em..."></textarea>
     <button id="enhanceBtn">Làm cho lời chúc hay hơn!</button>
+
     <div id="loadingSpinner" class="spinner"></div>
     <div id="results"></div>
   </div>
 
+  <!-- ======== SCRIPT ======== -->
   <script>
     const enhanceBtn = document.getElementById("enhanceBtn");
     const userInput = document.getElementById("userInput");
@@ -151,9 +217,10 @@
           resultsDiv.innerHTML = `<div class="result-item" style="border-left-color:#e53935"><b>Lỗi:</b> ${data.error}</div>`;
         } else {
           const lines = data.result.split("\n").filter(t => t.trim());
-          lines.forEach(line => {
+          lines.forEach((line, i) => {
             const div = document.createElement("div");
             div.className = "result-item";
+            div.style.animationDelay = `${i * 0.15}s`;
             div.textContent = line;
             resultsDiv.appendChild(div);
           });
