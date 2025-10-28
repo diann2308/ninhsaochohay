@@ -6,17 +6,113 @@
   <title>AI Nâng Cấp Lời Chúc 20/11</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" />
   <style>
-    body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #f5f7fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; color: #333; }
-    .container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); max-width: 600px; width: 100%; text-align: center; }
+    body { 
+      font-family: 'Be Vietnam Pro', sans-serif; 
+      background-color: #f5f7fa; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      margin: 0; 
+      padding: 20px; 
+      color: #333; 
+      overflow-x: hidden;
+    }
+
+    .container { 
+      background: #fff; 
+      padding: 40px; 
+      border-radius: 12px; 
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); 
+      max-width: 600px; 
+      width: 100%; 
+      text-align: center; 
+      position: relative;
+      z-index: 1;
+    }
+
     h1 { color: #2c7be5; }
-    textarea { width: 100%; min-height: 100px; padding: 15px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; resize: vertical; }
-    button { background: #2c7be5; color: #fff; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 20px; }
-    .result-item { background: #f9f9f9; border-left: 4px solid #2c7be5; padding: 15px; margin-top: 15px; border-radius: 0 8px 8px 0; }
-    .spinner { border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #2c7be5; animation: spin 1s linear infinite; margin: 20px auto; display: none; }
-    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+
+    textarea { 
+      width: 100%; 
+      min-height: 100px; 
+      padding: 15px; 
+      border-radius: 8px; 
+      border: 1px solid #ccc; 
+      font-size: 16px; 
+      resize: vertical; 
+    }
+
+    button { 
+      background: #2c7be5; 
+      color: #fff; 
+      border: none; 
+      padding: 15px 30px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-size: 16px; 
+      margin-top: 20px; 
+      transition: background 0.3s;
+    }
+
+    button:hover { background: #1a5db3; }
+
+    .result-item { 
+      background: #f9f9f9; 
+      border-left: 4px solid #2c7be5; 
+      padding: 15px; 
+      margin-top: 15px; 
+      border-radius: 0 8px 8px 0; 
+    }
+
+    .spinner { 
+      border: 4px solid rgba(0,0,0,0.1); 
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%; 
+      border-left-color: #2c7be5; 
+      animation: spin 1s linear infinite; 
+      margin: 20px auto; 
+      display: none; 
+    }
+
+    @keyframes spin { 
+      0% { transform: rotate(0); } 
+      100% { transform: rotate(360deg); } 
+    }
+
+    /* 🌸 Ảnh góc trái có chuyển động lượn lờ */
+    .corner-image {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 5%;
+      z-index: 1000;
+      animation: floaty 6s ease-in-out infinite;
+    }
+
+    .corner-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    @keyframes floaty {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      25%  { transform: translateY(-8px) rotate(3deg); }
+      50%  { transform: translateY(0px) rotate(-3deg); }
+      75%  { transform: translateY(6px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
   </style>
 </head>
 <body>
+  <!-- 🌼 Ảnh lượn lờ góc trên bên trái -->
+  <div class="corner-image">
+    <img src="logotruongdepnhatbacninh.jpg" alt="Logo 20/11">
+  </div>
+
   <div class="container">
     <h1>✨ AI Nâng Cấp Lời Chúc 20/11 ✨</h1>
     <p>Nhập lời chúc của bạn, AI sẽ giúp bạn viết lại hay hơn!</p>
@@ -40,26 +136,32 @@
       spinner.style.display = "block";
       enhanceBtn.disabled = true;
 
-      const response = await fetch("/api/enhance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wish })
-      });
-
-      const data = await response.json();
-      spinner.style.display = "none";
-      enhanceBtn.disabled = false;
-
-      if (data.error) {
-        resultsDiv.innerHTML = `<div class="result-item" style="border-left-color:#e53935"><b>Lỗi:</b> ${data.error}</div>`;
-      } else {
-        const lines = data.result.split("\n").filter(t => t.trim());
-        lines.forEach(line => {
-          const div = document.createElement("div");
-          div.className = "result-item";
-          div.textContent = line;
-          resultsDiv.appendChild(div);
+      try {
+        const response = await fetch("/api/enhance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ wish })
         });
+
+        const data = await response.json();
+        spinner.style.display = "none";
+        enhanceBtn.disabled = false;
+
+        if (data.error) {
+          resultsDiv.innerHTML = `<div class="result-item" style="border-left-color:#e53935"><b>Lỗi:</b> ${data.error}</div>`;
+        } else {
+          const lines = data.result.split("\n").filter(t => t.trim());
+          lines.forEach(line => {
+            const div = document.createElement("div");
+            div.className = "result-item";
+            div.textContent = line;
+            resultsDiv.appendChild(div);
+          });
+        }
+      } catch (err) {
+        spinner.style.display = "none";
+        enhanceBtn.disabled = false;
+        resultsDiv.innerHTML = `<div class="result-item" style="border-left-color:#e53935"><b>Lỗi:</b> ${err.message}</div>`;
       }
     };
   </script>
